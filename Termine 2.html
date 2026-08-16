@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buchungskalender</title>
+
+    <style>
+        body { 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #3b3b3b86;
+            color: #333;
+            text-align: center;
+        }
+        header {
+            background-color: #771919;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            background-color: #484752;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        table {
+            border-collapse: collapse;
+            width: 300px;
+            text-align: center;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+           background: #f2f2f2;
+        }
+
+        .frei {
+           background: #d4edda;
+            cursor: pointer;
+        }
+
+        .belegt {
+            background: #f8d7da;
+            color: #999;
+        }
+
+        .frei:hover {
+            background: #c3e6cb;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        footer {
+            max-width: 7000px;
+            background-color: #3c3938;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Die Firebirds hautnah erleben!</h1>
+    </header>
+    <nav>
+        <a href="Main.html">Start</a>
+        <a href="Überuns.html">Über uns</a>
+        <a href="Kontakt.html">Kontakt</a>
+        <a href="Mitglieder.html">Band</a>
+        <a href="Termine 2.html">Termine</a>
+        <a href="Konzerte.html">Konzerte</a>
+        <a href="Aftermovie.html">Aftermovie</a>
+    </nav>
+
+
+    <h2>Buchungskalender</h2>
+    <p>🟢 frei | 🔴 belegt</p>
+
+    <div id="kalender"></div>
+
+    <script>
+    const belegteTage = [
+      "2026-02-10",
+      "2026-02-14",
+     "2026-02-05",
+     "2026-02-21"
+    ];
+
+    const heute = new Date();
+    const jahr = heute.getFullYear();
+    const monat = heute.getMonth();
+
+    function kalenderErstellen(jahr, monat) {
+        const kalender = document.getElementById("kalender");
+        kalender.innerHTML = "";
+
+        const tageImMonat = new Date(jahr, monat + 1, 0).getDate();
+        const ersterTag = new Date(jahr, monat, 1).getDay();
+        const wochentage = ["So","Mo","Di","Mi","Do","Fr","Sa"];
+
+        let html = "<table><tr>";
+        wochentage.forEach(tag => html += "<th>" + tag + "</th>");
+        html += "</tr><tr>";
+
+        for (let i = 0; i < ersterTag; i++) html += "<td></td>";
+
+        for (let tag = 1; tag <= tageImMonat; tag++) {
+            const datum = `${jahr}-${String(monat+1).padStart(2,"0")}-${String(tag).padStart(2,"0")}`;
+
+        if ((tag + ersterTag - 1) % 7 === 0) html += "</tr><tr>";
+
+        if (belegteTage.includes(datum)) {
+        html += `<td class="belegt">${tag}</td>`;
+        } else {
+        html += `<td class="frei" onclick="buchen('${datum}')">${tag}</td>`;
+        }
+        }
+
+        html += "</tr></table>";
+        kalender.innerHTML = html;
+    }
+
+    function buchen(datum) {
+        alert("Du hast den " + datum + " ausgewählt!");
+        // hier später Formular, E-Mail oder Datenbank einbauen
+    }
+
+    kalenderErstellen(jahr, monat);
+    </script>
+    <br>
+      <a href="https://www.instagram.com/diefirebirds/" target="_blank">
+    Folgt uns auf Instagram
+    </a>
+    </main>
+    <footer>
+        <p> © Tom Lorenzen 2025 </p>
+        <a href="Impressum.html">Impressum</a>
+    </footer>
+</body>
+
+</html>
